@@ -40,7 +40,13 @@ public class HelloWorldController {
 
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
-        return Flux.interval(Duration.ofSeconds(1))
-                .map(sequence -> "" + isTouched);
+        if(isTouched) {
+            isTouched = false;
+            return Flux.interval(Duration.ofSeconds(1))
+                    .map(sequence -> "true");
+        } else {
+            return Flux.interval(Duration.ofSeconds(1))
+                    .map(sequence -> "false");
+        }
     }
 }
