@@ -42,12 +42,12 @@ class HelloWorldControllerTest {
     }
 
     /**
-     * Basic test to verify the result obtained when calling {@link HelloWorldController#helloWorldGet} successfully.
+     * Basic test to verify the result obtained when calling {@link HelloWorldController#getIstouched} successfully.
      */
     @Test
     @DisplayName("Basic test for GET request")
     void testGetRequest() {
-        ResponseEntity responseEntity = controller.helloWorldGet(INPUT_NAME);
+        ResponseEntity responseEntity = controller.getIstouched(INPUT_NAME);
 
         // Verify the response obtained matches the values we expect.
         JSONObject jsonObjectFromResponse = new JSONObject(responseEntity.getBody().toString());
@@ -56,12 +56,12 @@ class HelloWorldControllerTest {
     }
 
     /**
-     * Basic test to verify the result obtained when calling {@link HelloWorldController#helloWorldPost} successfully.
+     * Basic test to verify the result obtained when calling {@link HelloWorldController#setIsTouched} successfully.
      */
     @Test
     @DisplayName("Basic test for POST request")
     void testPostRequest() {
-        ResponseEntity responseEntity = controller.helloWorldPost(INPUT_NAME);
+        ResponseEntity responseEntity = controller.setIsTouched(INPUT_NAME);
 
         // Verify the response obtained matches the values we expect.
         JSONObject jsonObjectFromResponse = new JSONObject(responseEntity.getBody().toString());

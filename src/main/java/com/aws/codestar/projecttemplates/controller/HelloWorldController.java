@@ -14,19 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class HelloWorldController {
 
-    private static final String MESSAGE_FORMAT = "Hello %s!";
+    private static boolean isTouched = false;
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity helloWorldGet(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return ResponseEntity.ok(createResponse(name));
+    public ResponseEntity getIstouched() {
+        String response = "";
+        if (isTouched) response = "true";
+        else response = "false";
+        isTouched = false;
+        return ResponseEntity.ok(createResponse(response));
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity helloWorldPost(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return ResponseEntity.ok(createResponse(name));
+    public ResponseEntity setIsTouched() {
+        isTouched = true;
+        return ResponseEntity.ok(createResponse(""));
     }
 
-    private String createResponse(String name) {
-        return new JSONObject().put("Output", String.format(MESSAGE_FORMAT, name)).toString();
+    private String createResponse(String responseStr) {
+        return new JSONObject().put("touched", responseStr).toString();
     }
 }
