@@ -53,6 +53,7 @@ public class HelloWorldController {
         return new JSONObject().put("touched", responseStr).toString();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
         return Flux.interval(Duration.ofSeconds(1))
@@ -60,12 +61,14 @@ public class HelloWorldController {
                 .doOnEach(a -> isTouched = false);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(path = "/temp1-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> temp1Flux() {
         return Flux.interval(Duration.ofSeconds(3))
                 .map(sequence -> temp1);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(path = "/temp2-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> temp2Flux() {
         return Flux.interval(Duration.ofSeconds(3))
