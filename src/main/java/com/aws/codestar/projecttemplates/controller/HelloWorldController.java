@@ -8,6 +8,7 @@ import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Basic Spring web service controller that handles all GET requests.
@@ -31,6 +32,13 @@ public class HelloWorldController {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setIsTouched(String test) {
         isTouched = true;
+        try {
+            Thread.sleep(1100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        isTouched = false;
         return ResponseEntity.ok(createResponse(""));
     }
 
@@ -40,13 +48,7 @@ public class HelloWorldController {
 
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
-        if(isTouched) {
-            isTouched = false;
             return Flux.interval(Duration.ofSeconds(1))
-                    .map(sequence -> "true");
-        } else {
-            return Flux.interval(Duration.ofSeconds(1))
-                    .map(sequence -> "false");
-        }
+                    .map(sequence -> ""+isTouched );
     }
 }
