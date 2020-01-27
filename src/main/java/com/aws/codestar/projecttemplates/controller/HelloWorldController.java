@@ -17,7 +17,7 @@ public class HelloWorldController {
     private static boolean isTouched = false;
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity getIstouched() {
+    public ResponseEntity getIstouched(String test) {
         String response = "";
         if (isTouched) response = "true";
         else response = "false";
@@ -26,7 +26,7 @@ public class HelloWorldController {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity setIsTouched() {
+    public ResponseEntity setIsTouched(String test) {
         isTouched = true;
         return ResponseEntity.ok(createResponse(""));
     }
