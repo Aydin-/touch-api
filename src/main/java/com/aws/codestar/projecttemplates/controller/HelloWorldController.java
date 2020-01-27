@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 public class HelloWorldController {
 
     private static boolean isTouched = false;
+    private static String temp1 = "";
+    private static String temp2 = "";
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getIstouched(String test) {
@@ -31,10 +33,19 @@ public class HelloWorldController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setIsTouched(HttpEntity<String> httpEntity) {
-
-        System.out.println(httpEntity.getBody());
-
         isTouched = true;
+        return ResponseEntity.ok(createResponse(""));
+    }
+
+    @RequestMapping(path = "/temp1", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity setTemp1(@RequestParam String temp1new) {
+        temp1 = temp1new;
+        return ResponseEntity.ok(createResponse(""));
+    }
+
+    @RequestMapping(path = "/temp1", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity setTemp2(@RequestParam String temp2new) {
+        temp2 = temp2new;
         return ResponseEntity.ok(createResponse(""));
     }
 
@@ -47,5 +58,17 @@ public class HelloWorldController {
         return Flux.interval(Duration.ofSeconds(1))
                 .map(sequence -> "" + isTouched)
                 .doOnEach(a -> isTouched = false);
+    }
+
+    @GetMapping(path = "/temp1-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> temp1Flux() {
+        return Flux.interval(Duration.ofSeconds(3))
+                .map(sequence -> temp1);
+    }
+
+    @GetMapping(path = "/temp2-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> temp2Flux() {
+        return Flux.interval(Duration.ofSeconds(3))
+                .map(sequence -> temp2);
     }
 }
