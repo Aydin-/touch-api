@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
  * Basic Spring web service controller that handles all GET requests.
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/")
 public class HelloWorldController {
 
@@ -35,12 +34,14 @@ public class HelloWorldController {
         return ResponseEntity.ok(createResponse(""));
     }
 
+    @CrossOrigin
     @RequestMapping(path = "/temp1", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setTemp1(@RequestParam String temp1new) {
         temp1 = temp1new;
         return ResponseEntity.ok(createResponse(""));
     }
 
+    @CrossOrigin
     @RequestMapping(path = "/temp2", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setTemp2(@RequestParam String temp2new) {
         temp2 = temp2new;
@@ -51,6 +52,7 @@ public class HelloWorldController {
         return new JSONObject().put("touched", responseStr).toString();
     }
 
+    @CrossOrigin
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
         return Flux.interval(Duration.ofSeconds(1))
