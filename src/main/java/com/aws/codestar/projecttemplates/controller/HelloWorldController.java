@@ -24,24 +24,28 @@ public class HelloWorldController {
     private static String temp1 = "";
     private static String temp2 = "";
 
+    @CrossOrigin(origins = "*", methods=RequestMethod.GET, allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getIstouched(String test) {
         return ResponseEntity.ok(createResponse("" + isTouched));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setIsTouched(HttpEntity<String> httpEntity) {
         isTouched = true;
         return ResponseEntity.ok(createResponse(""));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(path = "/temp1", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setTemp1(@RequestParam String temp1new) {
         temp1 = temp1new;
         return ResponseEntity.ok(createResponse(""));
     }
 
-    @RequestMapping(path = "/temp1", method = RequestMethod.POST, produces = "application/json")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @RequestMapping(path = "/temp2", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setTemp2(@RequestParam String temp2new) {
         temp2 = temp2new;
         return ResponseEntity.ok(createResponse(""));
