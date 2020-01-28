@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * Basic Spring web service controller that handles all GET requests.
  */
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin
 @RequestMapping("/")
 public class HelloWorldController {
 
@@ -24,27 +24,23 @@ public class HelloWorldController {
     private static String temp1 = "";
     private static String temp2 = "";
 
-    @CrossOrigin(origins = "*", methods=RequestMethod.GET, allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getIstouched(String test) {
         return ResponseEntity.ok(createResponse("" + isTouched));
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setIsTouched(HttpEntity<String> httpEntity) {
         isTouched = true;
         return ResponseEntity.ok(createResponse(""));
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(path = "/temp1", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setTemp1(@RequestParam String temp1new) {
         temp1 = temp1new;
         return ResponseEntity.ok(createResponse(""));
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(path = "/temp2", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setTemp2(@RequestParam String temp2new) {
         temp2 = temp2new;
@@ -55,7 +51,6 @@ public class HelloWorldController {
         return new JSONObject().put("touched", responseStr).toString();
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
         return Flux.interval(Duration.ofSeconds(1))
